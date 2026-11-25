@@ -1,6 +1,6 @@
 """Call the Webcite tools directly, without a model.
 
-Install: pip install langchain-webcite
+Install: pip install "git+https://github.com/strategyconnect/webcite-python.git@v0.1.0" "git+https://github.com/strategyconnect/langchain-webcite.git@v0.1.0"
 Run:     WEBCITE_API_KEY=... python examples/tools_direct.py
 """
 
