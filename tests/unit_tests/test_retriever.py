@@ -38,3 +38,16 @@ class TestRetrieverRecorded(RetrieversIntegrationTests):
     @property
     def retriever_query_example(self) -> str:
         return "Is the Great Wall of China visible from the Moon?"
+
+
+def test_source_without_passage_keeps_its_title() -> None:
+    import httpx
+
+    def answer(_: httpx.Request) -> httpx.Response:
+        cited = {"url": "https://example.org/a", "title": "Example A"}
+        return httpx.Response(200, json={"claim_groups": [{"citations": [cited]}]})
+
+    client = Webcite("test-key", http_client=httpx.Client(transport=httpx.MockTransport(answer)))
+    docs = WebciteRetriever(client=client).invoke("q")
+    assert docs[0].page_content == "Example A"
+    assert docs[0].metadata["url"] == "https://example.org/a"

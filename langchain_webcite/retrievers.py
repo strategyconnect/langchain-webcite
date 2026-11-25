@@ -33,7 +33,7 @@ class WebciteRetriever(BaseRetriever):
         response = self.client.search(query, limit=limit)
         return [
             Document(
-                page_content=str(item.get("passage") or ""),
+                page_content=str(item.get("passage") or item.get("title") or item.get("url")),
                 metadata={key: val for key, val in item.items() if key != "passage"},
             )
             for item in search_results(response, limit)
