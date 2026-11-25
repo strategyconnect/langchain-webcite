@@ -1,0 +1,62 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "langchain-webcite"
+version = "0.1.0"
+description = "LangChain tools and retriever for Webcite: verify claims with citations bound to source passages, search sources, and parse documents to Markdown."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [{ name = "Webcite" }]
+keywords = ["langchain", "webcite", "claim-verification", "fact-checking", "citations", "pdf-to-markdown", "document-parsing", "retriever", "rag", "ai-agents"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Typing :: Typed",
+]
+dependencies = ["langchain-core>=0.3.0,<2.0.0", "webcite>=0.1.0,<0.2.0"]
+
+[project.urls]
+Homepage = "https://webcite.co"
+Documentation = "https://github.com/strategyconnect/langchain-webcite#readme"
+Repository = "https://github.com/strategyconnect/langchain-webcite"
+"API reference" = "https://webcite.co/api-docs"
+
+[dependency-groups]
+test = ["pytest>=8", "pytest-asyncio>=0.23", "langchain-tests>=0.3.0", "pytest-socket>=0.7"]
+lint = ["ruff>=0.5", "mypy>=1.10"]
+
+# Until `webcite` is on PyPI, development installs take it from its public repository.
+# Built wheels and sdists carry only the version requirement above.
+[tool.uv.sources]
+webcite = { git = "https://github.com/strategyconnect/webcite-python", rev = "9c144346a111c354fc7d11322bac03d56e6659d1" }
+
+[tool.hatch.build.targets.wheel]
+packages = ["langchain_webcite"]
+
+[tool.hatch.build.targets.sdist]
+include = ["langchain_webcite", "tests", "examples", "README.md", "LICENSE", "Makefile"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+files = ["langchain_webcite"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--disable-socket --allow-unix-socket"
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
