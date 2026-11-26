@@ -17,9 +17,8 @@ credits, renewing every 30 days while credits remain.
 
 ## Install
 
-<!-- Switch back to "pip install langchain-webcite" once it is published on PyPI. -->
 ```bash
-pip install "git+https://github.com/strategyconnect/webcite-python.git@v0.1.0" "git+https://github.com/strategyconnect/langchain-webcite.git@v0.1.0"
+pip install langchain-webcite
 export WEBCITE_API_KEY=...   # create one at https://webcite.co/api-keys
 ```
 
